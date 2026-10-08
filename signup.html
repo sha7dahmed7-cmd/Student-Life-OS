@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - Student Life OS</title>
+    <link rel="stylesheet" href="student.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <button id="darkModeBtn" class="auth-theme-btn" style="position: fixed; top: 20px; left: 20px; display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 12px; cursor: pointer; z-index: 1000;">
+        <i class="fa-solid fa-moon"></i>
+        <span>الوضع الليلي</span>
+    </button>
+
+<section class="signup-page">
+
+    <div class="signup-box">
+
+        <div class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+
+        <h1>إنشاء حساب</h1>
+
+        <p>ابدئي رحلتك مع Student Life OS 🎓</p>
+
+        <form id="signupForm">
+
+            <div class="input-box">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="name" placeholder="الاسم" required>
+            </div>
+
+            <div class="input-box">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            </div>
+
+            <div class="input-box">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="كلمة المرور" required>
+            </div>
+
+            <div class="input-box">
+                <i class="fa-solid fa-building-columns"></i>
+                <input type="text" id="college" placeholder="الكلية" required>
+            </div>
+
+            <div class="input-box">
+                <i class="fa-solid fa-book-open"></i>
+                <input type="text" id="major" placeholder="التخصص" required>
+            </div>
+
+            <div class="input-box">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <input type="text" id="study_year" placeholder="السنه الدراسيه" required>
+            </div>
+
+            <button type="submit" class="main-btn">
+                إنشاء الحساب
+                <i class="fa-solid fa-user-plus"></i>
+            </button>
+
+            <p id="message" class="login-message"></p>
+
+        </form>
+
+    </div>
+
+</section>
+
+<script>
+    const darkModeBtn = document.getElementById("darkModeBtn");
+
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+    }
+
+    darkModeBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        if (document.body.classList.contains("dark")) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.setItem("theme", "light");
+        }
+    });
+
+    const form = document.getElementById("signupForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const college = document.getElementById("college").value.trim();
+        const major = document.getElementById("major").value.trim();
+        const study_year = document.getElementById("study_year").value.trim();
+
+        try {
+            const response = await fetch("http://localhost:3000/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password,
+                    college: college,
+                    major: major,
+                    study_year: study_year
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                message.textContent = "تم إنشاء الحساب بنجاح 🎉";
+                message.style.color = "#35b779";
+                form.reset();
+            } else {
+                message.textContent = data.error || "حدث خطأ ما";
+                message.style.color = "#ef5350";
+            }
+
+        } catch (error) {
+            message.textContent = "مش قادرين نتصل بالـ Server.";
+            message.style.color = "#ef5350";
+        }
+    });
+</script>
+
+</body>
+</html>

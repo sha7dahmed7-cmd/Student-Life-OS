@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Life OS</title>
+
+    <link rel="stylesheet" href="student.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <section class="login-page">
+
+        <div class="login-box">
+
+            <div class="logo">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+            <h1>Student Life OS</h1>
+
+            <p>
+                نظم حياتك الجامعية في مكان واحد 🎓
+            </p>
+
+            <div class="choice-buttons">
+
+                <!-- إنشاء حساب -->
+                <a href="signup.html" class="main-btn choice-btn">
+                    <i class="fa-solid fa-user-plus"></i>
+                    إنشاء حساب
+                </a>
+
+                <!-- تسجيل الدخول -->
+                <a href="student.html" class="main-btn choice-btn">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    تسجيل الدخول
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark");
+        }
+    </script>
+
+</body>
+
+</html>
